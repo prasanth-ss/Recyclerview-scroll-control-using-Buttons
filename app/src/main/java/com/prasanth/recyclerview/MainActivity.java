@@ -75,7 +75,7 @@ public class MainActivity extends AppCompatActivity {
         up_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                recyclerView.smoothScrollToPosition(mLayoutManager.findFirstVisibleItemPosition()-1);
+                recyclerView.smoothScrollToPosition(mLayoutManager.findLastVisibleItemPosition()-1);
 //                recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener()
 //                {
 //                    @Override
