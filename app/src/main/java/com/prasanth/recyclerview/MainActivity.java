@@ -57,16 +57,16 @@ public class MainActivity extends AppCompatActivity {
 //        up_btn.setVisibility(View.GONE);
 //        down_btn.setVisibility(View.GONE);
 
-          int totalItemCount = mLayoutManager.getItemCount();
-        int visibleItemCount = mLayoutManager.getChildCount();
-        Log.e("main", "count:   visibleItemCount "+ visibleItemCount);
-        Log.e("main", "count: totalItemCount  "+ totalItemCount);
+//          int totalItemCount = mLayoutManager.getItemCount();
+//        int visibleItemCount = mLayoutManager.getChildCount();
+//        Log.e("main", "count:   visibleItemCount "+ visibleItemCount);
+//        Log.e("main", "count: totalItemCount  "+ totalItemCount);
 
 
-        if(totalItemCount > visibleItemCount  ) {
-            up_btn.setVisibility(View.VISIBLE);
-            down_btn.setVisibility(View.VISIBLE);
-        }
+//        if(totalItemCount > visibleItemCount  ) {
+//            up_btn.setVisibility(View.VISIBLE);
+//            down_btn.setVisibility(View.VISIBLE);
+//        }
 //        int count= mAdapter.getItemCount();
 //        Log.e("main", "count: "+ count );
 
@@ -75,7 +75,16 @@ public class MainActivity extends AppCompatActivity {
         up_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                recyclerView.smoothScrollToPosition(mLayoutManager.findFirstVisibleItemPosition() +1);
+
+
+
+                int firstVisibleItemIndex = mLayoutManager.findFirstCompletelyVisibleItemPosition();
+                Log.e("main", "count:   firstVisibleItemIndex "+ firstVisibleItemIndex);
+                if (firstVisibleItemIndex > 0) {
+                    mLayoutManager.smoothScrollToPosition(recyclerView,null,firstVisibleItemIndex-1);
+                }
+
+//                recyclerView.smoothScrollToPosition(mLayoutManager.findFirstVisibleItemPosition() +1);
 //                recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener()
 //                {
 //                    @Override
@@ -96,7 +105,9 @@ public class MainActivity extends AppCompatActivity {
 //                                Log.e("...", "Last Item Wow !");
 //                                //Do pagination.. i.e. fetch new data
 //                            }
-//
+
+
+
 //                        }
 //                    }
 //                });
@@ -109,7 +120,17 @@ public class MainActivity extends AppCompatActivity {
         down_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                recyclerView.smoothScrollToPosition(mLayoutManager.findFirstVisibleItemPosition() +1);
+                int totalItemCount = recyclerView.getAdapter().getItemCount();
+                if (totalItemCount <= 0) return;
+                int lastVisibleItemIndex = mLayoutManager.findLastVisibleItemPosition();
+
+                Log.e("main", "count:   lastVisibleItemIndex "+ lastVisibleItemIndex);
+                            Log.e("main", "count: totalItemCount  "+ totalItemCount);
+//                            Log.e("main", "count: pastVisiblesItems "+ pastVisiblesItems);
+
+                if (lastVisibleItemIndex >= totalItemCount) return;
+                mLayoutManager.smoothScrollToPosition(recyclerView,null,lastVisibleItemIndex +1);
+//                recyclerView.smoothScrollToPosition(mLayoutManager.findFirstVisibleItemPosition() +1);
             }
         });
 
